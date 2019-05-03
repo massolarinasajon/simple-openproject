@@ -1,8 +1,7 @@
 import React from 'react';
-import './App.css';
+import 'bulma';
 import Table from './components/Table';
 import Filtro from './components/Filtro';
-import 'bulma';
 
 function App() {
     return (
