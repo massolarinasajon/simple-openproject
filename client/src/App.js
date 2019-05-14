@@ -6,10 +6,8 @@ import Filtro from './components/Filtro';
 function App() {
     return (
         <section className="section">
-            <div className="container">
-                <Filtro />
-                <Table />
-            </div>
+			<Filtro />
+			<Table />
         </section>
     );
 }

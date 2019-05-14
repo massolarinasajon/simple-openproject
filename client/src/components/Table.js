@@ -48,7 +48,7 @@ export default class Table extends Component {
         return (
             <div>
                 <Loader show={this.state.loadingTasks}/>
-                <table className="table is-striped is-hoverable">
+                <table className="table is-striped is-hoverable is-fullwidth">
                     <thead>
                         <tr>
                             <th>#</th>
