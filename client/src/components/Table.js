@@ -74,7 +74,7 @@ export default class Table extends Component {
                         }
                     </tbody>
                 </table>
-                <nav className="pagination" role="navigation" aria-label="pagination">
+                <nav className="pagination is-centered" role="navigation" aria-label="pagination">
                     <ul className="pagination-list">
                         {
                             Array(this.state.totalPage).fill()
