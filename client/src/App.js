@@ -5,10 +5,8 @@ import Filtro from './components/Filtro';
 
 const App = () => (
     <section className="section">
-        <div className="container">
-            <Filtro />
-            <Table />
-        </div>
+        <Filtro />
+        <Table />
     </section>
 );
 
