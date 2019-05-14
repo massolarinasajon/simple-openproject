@@ -48,7 +48,7 @@ export default class Table extends Component {
         return (
             <div>
                 <Loader show={this.state.loadingTasks}/>
-                <table className="table is-striped is-hoverable">
+                <table className="table is-striped is-hoverable is-fullwidth">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -74,7 +74,7 @@ export default class Table extends Component {
                         }
                     </tbody>
                 </table>
-                <nav className="pagination" role="navigation" aria-label="pagination">
+                <nav className="pagination is-centered" role="navigation" aria-label="pagination">
                     <ul className="pagination-list">
                         {
                             Array(this.state.totalPage).fill()
