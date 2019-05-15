@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Loader from './Loader';
+import Pagination from './Pagination';
 
 export default class Table extends Component {
     constructor() {
         super();
         this.state = {
-            page: 1,
-            totalPage: 1,
+            pageSize: 1,
+            listSize: 1,
             tasks: [],
             loadingTasks: true,
             statuses: []
@@ -17,14 +18,15 @@ export default class Table extends Component {
         this.getData();
     }
 
-    getTasks() {
-        fetch(`/api/tasks?page=${this.state.page}`)
+    getTasks(page = 1) {
+        fetch(`/api/tasks?page=${page}`)
             .then(response => response.json())
             .then(response => {
                 this.setState({
                     tasks: response._embedded.elements,
                     page: response.offset,
-                    totalPage: Math.ceil(response.total / response.pageSize),
+                    pageSize: response.pageSize,
+                    listSize: response.total,
                     loadingTasks: false
                 });
             });
@@ -39,9 +41,8 @@ export default class Table extends Component {
 
     changePage(page) {
         this.setState({
-            page,
             loadingTasks: true
-        }, this.getTasks);
+        }, this.getTasks(page));
     }
 
     render() {
@@ -74,19 +75,7 @@ export default class Table extends Component {
                         }
                     </tbody>
                 </table>
-                <nav className="pagination is-centered" role="navigation" aria-label="pagination">
-                    <ul className="pagination-list">
-                        {
-                            Array(this.state.totalPage).fill()
-                                .map((_, i) => i + 1)
-                                .map(n => (
-                                <li key={n}>
-                                    <button onClick={() => { this.changePage(n) }} className={`button pagination-link ${(this.state.page === n) ? 'is-current' : ''}`} aria-label={`Page ${n}`} aria-current="page">{n}</button>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </nav>
+                <Pagination onChange={(n) => this.changePage(n)} listSize={this.state.listSize} pageSize={this.state.pageSize}/>
             </div>
         )
     }
