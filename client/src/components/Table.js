@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from './Loader';
+import ModalEdit from './ModalEdit';
 import Pagination from './Pagination';
 
 export default class Table extends Component {
@@ -10,7 +11,8 @@ export default class Table extends Component {
             listSize: 1,
             tasks: [],
             loadingTasks: true,
-            statuses: []
+            statuses: [],
+            task: {}
         };
     }
 
@@ -32,6 +34,26 @@ export default class Table extends Component {
             });
     }
 
+    getTask(id) {
+        this.setState({
+            loadingTasks: true
+        }, () => {
+            fetch(`/api/task/${id}`)
+            .then(response => response.json())
+            .then(response => {
+                this.setState({
+                    task: response,
+                    loadingTasks: false
+                });
+            });
+        });
+    }
+
+    clearTask() {
+        console.log('chegou aqui');
+        this.setState({ task: {} });
+    }
+
     getData() {
         this.getTasks();
         fetch('/api/statuses')
@@ -49,6 +71,7 @@ export default class Table extends Component {
         return (
             <div>
                 <Loader show={this.state.loadingTasks}/>
+                { (this.state.task.id) ? <ModalEdit onCancelar={this.clearTask.bind(this)} task={this.state.task} /> : '' }
                 <table className="table is-striped is-hoverable is-fullwidth">
                     <thead>
                         <tr>
@@ -62,7 +85,7 @@ export default class Table extends Component {
                             this.state.tasks.map(task => (
                                 <tr key={task.id}>
                                     <td>{task.id}</td>
-                                    <td>{task.subject}</td>
+                                    <td><a href='#' onClick={() => this.getTask(task.id)}>{task.subject}</a></td>
                                     <td>
                                         <div className={`select ${(this.state.statuses.length === 0) ? 'is-loading' : ''}`}>
                                             <select value={task._links.status.href} disabled={this.state.statuses.length === 0}>

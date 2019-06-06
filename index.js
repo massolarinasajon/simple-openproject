@@ -1,13 +1,19 @@
 console.log('Starting server...');
 const express = require('express');
 const port = 3001;
-const { getTasks, getStatuses } = require('./src/http');
+const { getTasks, getStatuses, getTask } = require('./src/http');
 
 const app = express();
 
 app.get('/api/tasks', (req, res) => {
     const { page } = req.query;
     getTasks(page)
+        .then(data => res.send(data))
+        .catch(console.log);
+});
+
+app.get('/api/task/:id', (req, res) => {
+    getTask(req.params.id)
         .then(data => res.send(data))
         .catch(console.log);
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bulma';
+import './bulma.scss';
 import Table from './components/Table';
 import Filtro from './components/Filtro';
 
